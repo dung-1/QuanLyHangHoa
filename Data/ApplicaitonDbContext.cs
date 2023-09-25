@@ -12,7 +12,7 @@ namespace QuanLyHangHoa.Data
 
             }
 
-            public DbSet<HangHoaModel> Employees { get; set; }
+            public DbSet<HangHoaModel> HangHoa { get; set; }
         }
     }
 }

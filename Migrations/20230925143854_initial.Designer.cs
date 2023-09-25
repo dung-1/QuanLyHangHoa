@@ -12,7 +12,7 @@ using QuanLyHangHoa.Data;
 namespace QuanLyHangHoa.Migrations
 {
     [DbContext(typeof(ApplicaitonDbContext.ApplicationDbContext))]
-    [Migration("20230925134424_initial")]
+    [Migration("20230925143854_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace QuanLyHangHoa.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("HangHoa");
                 });
 #pragma warning restore 612, 618
         }

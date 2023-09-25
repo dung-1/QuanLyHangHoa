@@ -43,7 +43,7 @@ namespace QuanLyHangHoa.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("HangHoa");
                 });
 #pragma warning restore 612, 618
         }

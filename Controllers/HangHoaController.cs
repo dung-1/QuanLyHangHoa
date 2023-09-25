@@ -1,83 +1,104 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using QuanLyHangHoa.Models;
+using static QuanLyHangHoa.Data.ApplicaitonDbContext;
 
 namespace QuanLyHangHoa.Controllers
 {
     public class HangHoaController : Controller
     {
-        // GET: HangHoaController
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public HangHoaController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public IActionResult Index()
+        {
+            IEnumerable<HangHoaModel> objCatlist = _context.HangHoa;
+            return View(objCatlist);
+        }
+
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: HangHoaController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: HangHoaController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HangHoaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(HangHoaModel empobj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _context.HangHoa.Add(empobj);
+                _context.SaveChanges();
+                TempData["ResultOk"] = "Record Added Successfully !";
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(empobj);
         }
 
-        // GET: HangHoaController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var empfromdb = _context.HangHoa.Find(id);
+
+            if (empfromdb == null)
+            {
+                return NotFound();
+            }
+            return View(empfromdb);
         }
 
-        // POST: HangHoaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(HangHoaModel empobj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _context.HangHoa.Update(empobj);
+                _context.SaveChanges();
+                TempData["ResultOk"] = "Data Updated Successfully !";
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(empobj);
         }
 
-        // GET: HangHoaController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var empfromdb = _context.HangHoa.Find(id);
+
+            if (empfromdb == null)
+            {
+                return NotFound();
+            }
+            return View(empfromdb);
         }
 
-        // POST: HangHoaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeleteEmp(int? id)
         {
-            try
+            var deleterecord = _context.HangHoa.Find(id);
+            if (deleterecord == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+            _context.HangHoa.Remove(deleterecord);
+            _context.SaveChanges();
+            TempData["ResultOk"] = "Data Deleted Successfully !";
+            return RedirectToAction("Index");
         }
+
+
     }
 }
