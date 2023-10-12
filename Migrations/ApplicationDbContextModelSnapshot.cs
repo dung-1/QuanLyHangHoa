@@ -22,6 +22,57 @@ namespace QuanLyHangHoa.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("QuanLyHangHoa.Models.ChiTietDonHangModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<float>("gia")
+                        .HasColumnType("real");
+
+                    b.Property<int>("orderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("soLuong")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("orderId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("CTDonHang");
+                });
+
+            modelBuilder.Entity("QuanLyHangHoa.Models.DonHangModel", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("ngayBan")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("tongTien")
+                        .HasColumnType("real");
+
+                    b.Property<string>("trangThai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("DonHang");
+                });
+
             modelBuilder.Entity("QuanLyHangHoa.Models.HangHoaModel", b =>
                 {
                     b.Property<int>("Id")
@@ -44,6 +95,30 @@ namespace QuanLyHangHoa.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HangHoa");
+                });
+
+            modelBuilder.Entity("QuanLyHangHoa.Models.ChiTietDonHangModel", b =>
+                {
+                    b.HasOne("QuanLyHangHoa.Models.DonHangModel", "order")
+                        .WithMany("ctdh")
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuanLyHangHoa.Models.HangHoaModel", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("order");
+
+                    b.Navigation("product");
+                });
+
+            modelBuilder.Entity("QuanLyHangHoa.Models.DonHangModel", b =>
+                {
+                    b.Navigation("ctdh");
                 });
 #pragma warning restore 612, 618
         }

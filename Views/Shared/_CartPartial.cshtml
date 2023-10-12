@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var session = HttpContextAccessor.HttpContext.Session;
+    string jsoncart = session.GetString(QuanLyHangHoa.Controllers.UserController.CARTKEY);
+    int cartCount = 0;  // Số lượng mặc định là 0
+
+    if (jsoncart != null)
+    {
+        var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+        cartCount = cart.Count;
+    }
+
+    <div class="nav-item"><a asp-route="cart" style=" text-decoration: none; ">@cartCount</a></div>
+}

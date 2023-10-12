@@ -1,0 +1,28 @@
+﻿@model IEnumerable<HangHoaModel>
+
+@{
+    ViewData["Title"] = "Các sản phẩm";
+}
+
+<div class="container">
+    <div >
+        <p class="fs-4 fw-bold d-flex justify-content-center text-danger">Danh Sách Sản Phẩm</p>
+    </div>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <h3 class="card-header">@product.Ten</h3>
+                    <div class="card-body" style="height: 150px;">
+                        <img width="220px" height="120px" src="https://originmarket.vn/wp-content/uploads/2021/11/cach-chon-hoa-qua-phu-hop-trong-che-do-an-uong-han-che-duong-1-768x483-1.jpg">
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-muted fw-bold">@(product.GIa) VND</span>
+                        <a asp-route="addcart" asp-route-id="@product.Id"class="btn btn-primary btn-sm float-right text-white"> <i class="fa-solid fa-cart-plus"></i> Mua Ngay</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

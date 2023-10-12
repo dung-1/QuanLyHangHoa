@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using static QuanLyHangHoa.Data.ApplicaitonDbContext;
 
 namespace QuanLyHangHoa
@@ -10,12 +10,20 @@ namespace QuanLyHangHoa
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // add
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")
                     ));
+
+                builder.Services.AddDistributedMemoryCache();     // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+                builder.Services.AddSession(cfg => {             // Đăng ký dịch vụ Session
+                cfg.Cookie.Name = "dungnguyen";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+                cfg.IdleTimeout = new TimeSpan(3, 60, 0);  // Thời gian tồn tại của Session
+            });
+
 
             var app = builder.Build();
 
@@ -29,14 +37,14 @@ namespace QuanLyHangHoa
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Index}/{id?}");
 
             app.Run();
         }
