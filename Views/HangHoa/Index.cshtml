@@ -14,7 +14,7 @@
     <h1 class="text-center mb-3">QUẢN LÝ HÀNG HÓA CRUD </h1>
 
     <div class="col mb-3">
-        <a asp-controller="HangHoa" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm Hàng Hóa </a>
+        <a asp-controller="HangHoa" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i><i class="fa-solid fa-plus"></i> Thêm Hàng Hóa </a>
     </div>
     <table class="table table-bordered table-hover">
         <thead>
@@ -42,8 +42,8 @@
                     </td>
                     <td>
                         <div role="group" class="w-60 btn-group">
-                            <a asp-controller="HangHoa" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Chỉnh Sửa</a>&nbsp;
-                            <a asp-controller="HangHoa" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xóa</a>
+                            <a asp-controller="HangHoa" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i><i class="fa-solid fa-pen-to-square"></i> Chỉnh Sửa</a>&nbsp;
+                            <a asp-controller="HangHoa" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i><i class="fa-solid fa-trash-can"></i> Xóa</a>
                         </div>
                     </td>
                 </tr>
